@@ -30,6 +30,11 @@ const listBook: Book[] = [
   },
 ]
 
+//Mocking a Service
+const bookServiceMock = {
+  getBooks: () => of(listBook)
+};
+
 describe('Home component', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
@@ -43,7 +48,11 @@ describe('Home component', () => {
         HomeComponent
       ],
       providers: [
-        BookService
+        //BookService
+        {
+          provide: BookService,
+          useValue: bookServiceMock
+        }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     }).compileComponents();
@@ -68,11 +77,13 @@ it('should create', () => {
 
 it('getBook get books from the subscription', () => {
   const bookService = fixture.debugElement.injector.get(BookService);
-  const spy1 = jest.spyOn(bookService, 'getBooks').mockReturnValueOnce( of(listBook) );
+  //const spy1 = jest.spyOn(bookService, 'getBooks').mockReturnValueOnce( of(listBook) );
   component.getBooks();
-  expect(spy1).toHaveBeenCalledTimes(1);
+  //expect(spy1).toHaveBeenCalledTimes(1);  //Commented both lines because now that we mocked the service we don't need the spy anymore.
   expect(component.listBook.length).toBe(3);
   expect(component.listBook).toEqual(listBook);
 });
+
+// Best to mock a Service when you have a Service with a lot of functions, so as to not create a lot of spies.
 
 });
