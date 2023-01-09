@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, inject, TestBed } from "@angular/core/testing";
 import { CartComponent } from "./cart.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
@@ -73,6 +73,14 @@ describe('Cart component', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  //Different way to instantiate a component/service below.
+
+  /*it('should create', inject([CartComponent], (component2: CartComponent) => {
+    expect(component2).toBeTruthy();
+  }));*/
+
+  // When injecting you have to put CartComponent inside providers instead of declarations.
 
 
   /*public getTotalPrice(listCartBook: Book[]): number {
