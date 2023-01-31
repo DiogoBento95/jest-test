@@ -37,13 +37,13 @@ export class BookService {
     if (listBook === null) { // Create a list with the book
       book.amount = 1;
       listBook = [ book ];
-    } else { 
+    } else {
       const index = listBook.findIndex((item: Book) => {
-        return book.id === item.id;
+        return book.isbn === item.id;
       });
       if (index !== -1) { // Update the quantity in the existing book
         listBook[index].amount++;
-      } else { 
+      } else {
         book.amount = 1;
         listBook.push(book);
       }
@@ -55,7 +55,7 @@ export class BookService {
   public updateAmountBook(book: Book): Book[] {
     const listBookCart = this.getBooksFromCart();
     const index = listBookCart.findIndex((item: Book) => {
-      return book.id === item.id;
+      return book.isbn === item.id;
     });
     if (index !== -1) {
       listBookCart[index].amount = book.amount;
